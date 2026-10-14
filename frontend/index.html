@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Student Task Manager</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="shell"><header><div><p class="eyebrow">DEVOPS DEMO APPLICATION</p><h1>Student Task Manager</h1><p class="subtitle">Plan your work. Track your progress.</p></div><span class="pill">API connected</span></header>
+<section class="composer"><form id="task-form"><label for="task-title">New task</label><div class="entry"><input id="task-title" maxlength="120" placeholder="e.g. Prepare Kubernetes notes" required><button type="submit">Add task</button></div></form></section>
+<section class="summary"><div><span id="total">0</span><small>Total tasks</small></div><div><span id="pending">0</span><small>Pending</small></div><div><span id="done">0</span><small>Completed</small></div></section>
+<section><div class="section-head"><h2>Your tasks</h2><button id="refresh" class="quiet">Refresh</button></div><p id="message" role="status"></p><ul id="tasks" class="tasks"></ul></section><footer><span>Student Task Manager</span><span>Built with Docker · Kubernetes · AWS</span></footer></main><script src="app.js"></script></body></html>

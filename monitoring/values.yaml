@@ -1,0 +1,26 @@
+grafana:
+  enabled: true
+  service:
+    type: ClusterIP
+  adminPassword: "CHANGE-ME-After-Install"
+prometheus:
+  prometheusSpec:
+    retention: 24h
+    scrapeInterval: 30s
+    serviceMonitorSelectorNilUsesHelmValues: false
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    storageSpec: {}
+alertmanager:
+  enabled: false
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true

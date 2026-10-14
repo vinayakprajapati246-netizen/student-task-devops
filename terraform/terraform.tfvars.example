@@ -1,0 +1,8 @@
+aws_region = "ap-south-1"
+project_name = "student-task"
+ssh_allowed_cidr = "YOUR_PUBLIC_IP/32"
+key_name = "YOUR_EXISTING_EC2_KEY_PAIR"
+worker_instance_types = ["t3.medium"]
+worker_desired_size = 1
+worker_min_size = 1
+worker_max_size = 2
