@@ -4,7 +4,7 @@ pipeline {
   environment {
     AWS_DEFAULT_REGION = 'ap-south-1' // change to the region used in Terraform
     EKS_CLUSTER_NAME = 'student-task-eks' // keep in sync with project_name + -eks
-    DOCKERHUB_USER = 'YOUR_DOCKERHUB_USERNAME' // replace, or define as a Jenkins global environment variable
+    DOCKERHUB_USER = 'vinayakprajapati123' // replace, or define as a Jenkins global environment variable
     K8S_NAMESPACE = 'student-task'
   }
   stages {
