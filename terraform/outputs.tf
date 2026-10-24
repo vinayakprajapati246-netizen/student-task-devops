@@ -1,23 +1,25 @@
+
 output "jenkins_public_ip" {
-  value = aws_instance.jenkins.public_ip
+  description = "Public IP of the existing Jenkins EC2 instance"
+  value       = var.existing_jenkins_public_ip
 }
 
 output "jenkins_url" {
-  value = "http://${aws_instance.jenkins.public_ip}:8080"
+  description = "Jenkins web interface URL"
+  value       = "http://${var.existing_jenkins_public_ip}:8080"
 }
 
 output "eks_cluster_name" {
-  value = module.eks.cluster_name
+  description = "EKS cluster name"
+  value       = module.eks.cluster_name
 }
 
 output "eks_cluster_endpoint" {
-  value = module.eks.cluster_endpoint
+  description = "EKS Kubernetes API endpoint"
+  value       = module.eks.cluster_endpoint
 }
 
-output "aws_region" {
-  value = var.aws_region
-}
-
-output "ecr_not_used_dockerhub_note" {
-  value = "Docker Hub is used for image storage; no ECR repository is created."
+output "eks_cluster_region" {
+  description = "AWS region of the EKS cluster"
+  value       = var.aws_region
 }

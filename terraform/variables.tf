@@ -46,3 +46,7 @@ variable "worker_max_size" {
   type    = number
   default = 2
 }
+variable "existing_jenkins_public_ip" {
+  type        = string
+  description = "Public IP of the existing Jenkins EC2 instance"
+}

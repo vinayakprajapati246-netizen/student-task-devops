@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,15 +7,19 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels: { app: backend }
+    matchLabels:
+      app: backend
   template:
     metadata:
-      labels: { app: backend }
+      labels:
+        app: backend
     spec:
       containers:
         - name: backend
           image: DOCKERHUB_USER/student-task-backend:latest
-          ports: [{ containerPort: 5000 }]
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
           env:
             - name: DATABASE_PATH
               value: /data/tasks.db
@@ -22,29 +27,43 @@ spec:
             - name: task-data
               mountPath: /data
           readinessProbe:
-            httpGet: { path: /health, port: 5000 }
+            httpGet:
+              path: /health
+              port: 5000
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
-            httpGet: { path: /health, port: 5000 }
+            httpGet:
+              path: /health
+              port: 5000
             initialDelaySeconds: 15
             periodSeconds: 20
           resources:
-            requests: { cpu: 50m, memory: 96Mi }
-            limits: { cpu: 300m, memory: 256Mi }
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
       volumes:
         - name: task-data
           emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: backend
   namespace: student-task
-  labels: { app: backend }
 spec:
-  selector: { app: backend }
-  ports: [{ name: http, port: 5000, targetPort: 5000 }]
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - name: http
+      port: 5000
+      targetPort: 5000
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -54,26 +73,39 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels: { app: frontend }
+    matchLabels:
+      app: frontend
   template:
     metadata:
-      labels: { app: frontend }
+      labels:
+        app: frontend
     spec:
       containers:
         - name: frontend
           image: DOCKERHUB_USER/student-task-frontend:latest
-          ports: [{ containerPort: 80 }]
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
           readinessProbe:
-            httpGet: { path: /, port: 80 }
+            httpGet:
+              path: /
+              port: 80
             initialDelaySeconds: 3
             periodSeconds: 10
           livenessProbe:
-            httpGet: { path: /, port: 80 }
+            httpGet:
+              path: /
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 20
           resources:
-            requests: { cpu: 25m, memory: 32Mi }
-            limits: { cpu: 150m, memory: 96Mi }
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 150m
+              memory: 96Mi
+
 ---
 apiVersion: v1
 kind: Service
@@ -81,6 +113,11 @@ metadata:
   name: frontend
   namespace: student-task
 spec:
-  type: LoadBalancer
-  selector: { app: frontend }
-  ports: [{ name: http, port: 80, targetPort: 80 }]
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30080
